@@ -5,7 +5,6 @@ import config from "../config";
 export class AuthService {
   client = new Client();
   account;
-
   constructor() {
     this.client.setEndpoint(config.projectUrl).setProject(config.projectId);
     this.account = new Account(this.client);
