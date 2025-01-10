@@ -14,6 +14,11 @@ export class Database {
     this.bucket = new Storage(this.client);
   }
 
+  /**
+   *
+   * @param {*} slug // unique id or any thing that is unique in that collection
+   * @returns
+   */
   async getPost(slug) {
     try {
       return await this.databases.getDocument(
@@ -27,6 +32,11 @@ export class Database {
     }
   }
 
+  /**
+   *
+   * @param {*} queries // one or more queries to filter out the collection
+   * @returns
+   */
   async getPosts(queries = [Query.equal("status", "active")]) {
     try {
       return await this.databases.listDocuments(
@@ -36,6 +46,31 @@ export class Database {
       );
     } catch (error) {
       console.log("Appwrite service :: getPosts() :: ", error);
+      return false;
+    }
+  }
+
+  /**
+   *
+   * @param {*} param0 // all the attributes values that is going to be created
+   * @returns
+   */
+  async createPost({ title, slug, content, featuredImage, status, userId }) {
+    try {
+      return await this.databases.createDocument(
+        conf.appwriteDatabaseId,
+        conf.appwriteCollectionId,
+        slug,
+        {
+          title,
+          content,
+          featuredImage,
+          status,
+          userId,
+        }
+      );
+    } catch (error) {
+      console.log("Appwrite service :: createPost() :: ", error);
       return false;
     }
   }
