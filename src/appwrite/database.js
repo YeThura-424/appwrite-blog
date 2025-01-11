@@ -1,15 +1,12 @@
-import conf from "../conf/conf";
+import config from "../config";
 import { Client, Databases, Storage, Query } from "appwrite";
 
 export class DatabaseService {
   client = new Client();
   databases;
-  bucket;
 
   constructor() {
-    this.client
-      .setEndpoint(conf.appwriteUrl)
-      .setProject(conf.appwriteProjectId);
+    this.client.setEndpoint(config.projectUrl).setProject(config.projectId);
     this.databases = new Databases(this.client);
     this.bucket = new Storage(this.client);
   }
@@ -22,8 +19,8 @@ export class DatabaseService {
   async getPost(slug) {
     try {
       return await this.databases.getDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
+        config.databaseId,
+        config.collectionId,
         slug
       );
     } catch (error) {
@@ -40,8 +37,8 @@ export class DatabaseService {
   async getPosts(queries = [Query.equal("status", "active")]) {
     try {
       return await this.databases.listDocuments(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
+        config.databaseId,
+        config.collectionId,
         queries
       );
     } catch (error) {
@@ -58,8 +55,8 @@ export class DatabaseService {
   async createPost({ title, slug, content, featuredImage, status, userId }) {
     try {
       return await this.databases.createDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
+        config.databaseId,
+        config.collectionId,
         slug,
         {
           title,
@@ -78,8 +75,8 @@ export class DatabaseService {
   async updatePost(slug, { title, content, featuredImage, status }) {
     try {
       return await this.databases.updateDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
+        config.databaseId,
+        config.collectionId,
         slug,
         {
           title,
@@ -97,8 +94,8 @@ export class DatabaseService {
   async deletePost(slug) {
     try {
       await this.databases.deleteDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
+        config.databaseId,
+        config.collectionId,
         slug
       );
       return true;
