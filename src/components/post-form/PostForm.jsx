@@ -23,7 +23,36 @@ export default function PostForm({ post }) {
   const userData = useSelector((state) => state.auth.userData);
 
   const submit = async (data) => {
-    //
+    if (post) {
+      const file = data.image[0]
+        ? await appwriteSerice.uploadFile(data.image[0])
+        : null;
+
+      if (file) {
+        appwriteSerice.deleteFile(post.featuredImage);
+      }
+      const dbPost = await appwriteSerice.updatePost(post.$id, {
+        ...data,
+        featuredImage: file ? file.$id : undefined,
+      });
+      if (dbPost) {
+        navigate(`/post/${dbPost.$id}`);
+      }
+    } else {
+      const file = await appwriteSerice.uploadFile(data.image[0]);
+      if (file) {
+        const fileId = file.$id;
+        data.featuredImage = fileId;
+        const dbPost = await appwriteSerice.createPost({
+          ...data,
+          userId: userData.$id,
+        });
+
+        if (dbPost) {
+          navigate(`/post/${dbPost.$id}`);
+        }
+      }
+    }
   };
 
   const slugTransform = useCallback((value) => {
