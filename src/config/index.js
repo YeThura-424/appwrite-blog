@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 const config = {
-  projectUrl: String(process.env.PROJECT_URL),
-  projectId: String(process.env.PROJECT_ID),
-  databaseId: String(process.env.DATABASE_ID),
-  collectionId: String(process.env.COLLECTION_ID),
-  bucketId: String(process.env.BUCKET_ID),
+  projectUrl: String(import.meta.env.VITE_PROJECT_URL),
+  projectId: String(import.meta.env.VITE_PROJECT_ID),
+  databaseId: String(import.meta.env.VITE_DATABASE_ID),
+  collectionId: String(import.meta.env.VITE_COLLECTION_ID),
+  bucketId: String(import.meta.env.VITE_BUCKET_ID),
 };
 
 export default config;
