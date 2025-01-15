@@ -4,9 +4,10 @@ import Button from "../Button";
 import Input from "../Input";
 import RTE from "../RTE";
 import Select from "../Select";
-import appwriteSerice from "../../appwrite/config";
+import databaseService from "../../appwrite/database";
+import fileService from "../../appwrite/file";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 export default function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, control, getValues } =
@@ -25,13 +26,13 @@ export default function PostForm({ post }) {
   const submit = async (data) => {
     if (post) {
       const file = data.image[0]
-        ? await appwriteSerice.uploadFile(data.image[0])
+        ? await fileService.uploadFile(data.image[0])
         : null;
 
       if (file) {
-        appwriteSerice.deleteFile(post.featuredImage);
+        fileService.deleteFile(post.featuredImage);
       }
-      const dbPost = await appwriteSerice.updatePost(post.$id, {
+      const dbPost = await databaseService.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
       });
@@ -39,11 +40,11 @@ export default function PostForm({ post }) {
         navigate(`/post/${dbPost.$id}`);
       }
     } else {
-      const file = await appwriteSerice.uploadFile(data.image[0]);
+      const file = await fileService.uploadFile(data.image[0]);
       if (file) {
         const fileId = file.$id;
         data.featuredImage = fileId;
-        const dbPost = await appwriteSerice.createPost({
+        const dbPost = await databaseService.createPost({
           ...data,
           userId: userData.$id,
         });
@@ -109,7 +110,7 @@ export default function PostForm({ post }) {
         {post && (
           <div className="w-full mb-4">
             <img
-              src={appwriteSerice.getFilePreview(post.featuredImage)}
+              src={fileService.getFilePreview(post.featuredImage)}
               alt={post.title}
               className="rounded-lg"
             />
