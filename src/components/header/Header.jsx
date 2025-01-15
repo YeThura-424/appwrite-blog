@@ -42,7 +42,7 @@ function Header() {
         <nav className="flex">
           <div className="mr-4">
             <Link to="/">
-              <Logo />
+              <Logo width="40px" />
             </Link>
           </div>
           <ul className="flex ml-auto">
