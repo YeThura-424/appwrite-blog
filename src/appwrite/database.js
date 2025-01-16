@@ -52,7 +52,7 @@ export class DatabaseService {
    * @param {*} param0 // all the attributes values that is going to be created
    * @returns
    */
-  async createPost({ title, slug, content, featuredImage, status, userId }) {
+  async createPost({ title, slug, content, image, status, userId }) {
     try {
       return await this.databases.createDocument(
         config.databaseId,
@@ -61,7 +61,7 @@ export class DatabaseService {
         {
           title,
           content,
-          featuredImage,
+          image,
           status,
           userId,
         }
