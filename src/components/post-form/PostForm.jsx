@@ -13,7 +13,7 @@ export default function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, control, getValues } =
     useForm({
       defaultValues: {
-        tittle: post?.title || "",
+        title: post?.title || "",
         slug: post?.slug || "",
         content: post?.content || "",
         status: post?.status || "active",
@@ -45,7 +45,7 @@ export default function PostForm({ post }) {
         console.log(userData, "creating posts");
 
         const fileId = file.$id;
-        data.image = fileId;
+        data.featuredimage = fileId;
         console.log(data);
         const dbPost = await databaseService.createPost({
           ...data,

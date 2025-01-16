@@ -58,7 +58,7 @@ function Header() {
                 </li>
               ) : null
             )}
-            {authStatus && (
+            {!authStatus && (
               <li>
                 <Logout />
               </li>

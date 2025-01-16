@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 
 const AuthLayout = ({ children, auth = true }) => {
   const authStatus = useSelector((state) => state.auth.authStatus);
-
   const navigate = useNavigate();
 
   const [loader, setLoader] = useState(true);
@@ -17,7 +16,6 @@ const AuthLayout = ({ children, auth = true }) => {
     } else if (!auth && authStatus !== auth) {
       navigate("/");
     }
-
     setLoader(false);
   }, [authStatus, auth, navigate]);
 
