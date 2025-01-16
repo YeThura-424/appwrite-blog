@@ -36,7 +36,7 @@ export const routes = createBrowserRouter([
         ),
       },
       {
-        path: "/all-post",
+        path: "/all-posts",
         element: (
           <AuthLayout auth>
             <AllPost />
