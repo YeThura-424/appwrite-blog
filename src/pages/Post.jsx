@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import database from "../appwrite/database";
-import file from "../appwrite/file";
+import fileService from "../appwrite/file";
 import Container from "../components/container/Container";
 import Button from "../components/Button";
 import parse from "html-react-parser";
@@ -19,6 +19,7 @@ const Post = () => {
     database.getPost(slug).then((post) => {
       if (post) {
         setPost(post);
+        console.log(post);
       } else {
         navigate("/");
       }
@@ -38,7 +39,7 @@ const Post = () => {
       <Container>
         <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
           <img
-            src={file.getFilePreview(post.featuredImage)}
+            src={fileService.getFilePreview(post.featuredimage)}
             alt="file image"
             className="rounded-xl"
           />
