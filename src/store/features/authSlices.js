@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import authService from "../../appwrite/auth";
 
 const initialState = {
-  authStatus: false,
-  userData: null,
+  authStatus: localStorage.getItem("auth_status"),
+  userData: JSON.parse(localStorage.getItem("auth_user")),
 };
 
 const authSlice = createSlice({
@@ -13,10 +13,17 @@ const authSlice = createSlice({
     login: (state, action) => {
       state.authStatus = true;
       state.userData = action.payload.userData;
+      localStorage.setItem("auth_status", true);
+      localStorage.setItem(
+        "auth_user",
+        JSON.stringify(action.payload.userData)
+      );
     },
     logout: (state) => {
       state.authStatus = false;
       state.userData = null;
+      localStorage.setItem("auth_status", false);
+      localStorage.removeItem("auth_user");
     },
   },
 });
