@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import authService from "../appwrite/auth";
 
 const AuthLayout = ({ children, auth = true }) => {
   const authStatus = useSelector((state) => state.auth.authStatus);
