@@ -8,13 +8,13 @@ import authService from "../appwrite/auth";
 const AuthLayout = ({ children, auth = true }) => {
   const authStatus = useSelector((state) => state.auth.authStatus);
   const navigate = useNavigate();
-
+  console.log("AuthLayout :: authStatus :: ", authStatus, auth);
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
-    if (auth && authStatus !== auth) {
+    if (!auth && authStatus !== auth) {
       navigate("/login");
-    } else if (!auth && authStatus !== auth) {
+    } else if (auth && authStatus !== auth) {
       navigate("/");
     }
     setLoader(false);

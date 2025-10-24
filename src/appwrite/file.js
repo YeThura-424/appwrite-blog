@@ -31,7 +31,7 @@ export class FileService {
 
   getFilePreview(fileId) {
     try {
-      return this.bucket.getFilePreview(config.bucketId, fileId);
+      return this.bucket.getFileView(config.bucketId, fileId);
     } catch (error) {
       console.log("Appwrite service :: getFilePreview() :: ", error);
       return false;
